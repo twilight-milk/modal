@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <title>Consent Modal</title>
+</head>
+<body>
+  <div class="consent-modal">
+    <div class="modal-content">
+      <h2>⚠️ Reminder: Upcoming Evaluation Deadline</h2>
+      <p>
+        The deadline for submitting your evaluation is fast approaching! Make sure to complete and submit all necessary information by [insert date]
+        Don’t miss out—ensure your evaluation is submitted on time to avoid any delays or complications.
+      </p>
+      <button class="allow-all">Understood</button>
+      <div class="preferences">
+        <h3>Understand and Confirm Evaluation Steps</h3>
+        <div class="preference-item">
+          <span>
+            <i class="fa-solid fa-plus"></i> Review Evaluation Requirements
+          </span>
+          <span class="always-active">Pending</span>
+        </div>
+        <div class="preference-item">
+          <span>
+            <i class="fa-solid fa-plus"></i> Complete Evaluation Form
+          </span>
+          <label class="toggle-switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="preference-item">
+          <span>
+            <i class="fa-solid fa-plus"></i> Submit Evaluation for Review
+          </span>
+          <label class="toggle-switch">
+            <input type="checkbox" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="preference-item">
+          <span>
+            <i class="fa-solid fa-plus"></i>Finalize and Submit Evaluation
+          </span>
+          <label class="toggle-switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button class="reject-all">Reject all</button>
+        <button class="submit-choices">Submit My Confirmation</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Function to show a popup message
+      function showPopup(message) {
+        const popup = document.createElement("div");
+        popup.className = "popup";
+        popup.textContent = message;
+        document.body.appendChild(popup);
+
+        setTimeout(() => {
+          document.body.removeChild(popup);
+        }, 1000);
+      }
+
+      // Reset modal to its default state
+      function resetModal() {
+        const checkboxes = document.querySelectorAll(".toggle-switch input");
+        if (checkboxes.length >= 4) {
+          checkboxes[0].checked = true; // Strictly Necessary Cookies (default)
+          checkboxes[1].checked = true; // Functional Cookies (default)
+          checkboxes[2].checked = true; // Performance Cookies (default)
+          checkboxes[3].checked = false; // Personalised Ads (default)
+        }
+
+        const alwaysActiveText = document.querySelector(".always-active");
+        if (alwaysActiveText) {
+          alwaysActiveText.textContent = "Always Active";
+        }
+      }
+
+      // "Allow All" button logic
+      document.querySelector(".allow-all").addEventListener("click", () => {
+        const checkboxes = document.querySelectorAll(".toggle-switch input");
+        checkboxes.forEach((input) => (input.checked = true));
+
+        const alwaysActiveText = document.querySelector(".always-active");
+        if (alwaysActiveText) {
+          alwaysActiveText.textContent = "Always Active";
+        }
+      });
+
+      // "Reject All" button logic
+      document.querySelector(".reject-all").addEventListener("click", () => {
+        const checkboxes = document.querySelectorAll(".toggle-switch input");
+        checkboxes.forEach((input) => (input.checked = false));
+
+        const alwaysActiveText = document.querySelector(".always-active");
+        if (alwaysActiveText) {
+          alwaysActiveText.textContent = "Decline";
+        }
+      });
+
+      // "Submit My Choices" button logic
+      document.querySelector(".submit-choices").addEventListener("click", () => {
+        showPopup("Your choices have been saved!");
+        // Do not reset the modal here to preserve user choices
+      });
+
+      // Optional: Reset modal state manually if needed
+      document.querySelector(".close-modal")?.addEventListener("click", () => {
+        resetModal();
+      });
+    });
+  </script>
+</body>
+</html>
